@@ -1,17 +1,12 @@
-'use client'
 import { TemplateBasic } from "@/components/_templates/template-basic"
-import React, { use } from "react"
+import { TemplateService } from "@/services/template-service"
 
-export default function DynamicPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params)
-
-  const data = {
-    domain: slug,
-    tokenName: 'NomDuToken',
-    contractAddress: '0x1234567890abcdef',
-    twitter: 'pseudoTwitter',
-    description: 'Ceci est une description de projet fictive pour le test.'
-  }
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const data = await TemplateService.getTemplate((await params).slug)
 
   return (
     <main>

@@ -15,22 +15,20 @@ export async function GET(request: Request) {
   }
 
   try {
-    const existingDomain = await prisma.template.findUnique({
+    const template = await prisma.template.findUnique({
       where: { domain: domain }
     });
 
-    const isAvailable = !existingDomain;
-
-    if (isAvailable) {
-      return NextResponse.json({
-        available: true,
-        redirect: `/create/${domain}`
-      });
+    if (!template) {
+      return NextResponse.json(
+        { error: 'Template non trouvé' },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json({ available: false });
+    return NextResponse.json(template);
   } catch (error) {
-    console.error('Erreur lors de la vérification du domaine:', error);
+    console.error('Erreur lors de la récupération du template:', error);
     return NextResponse.json(
       { error: 'Erreur serveur' },
       { status: 500 }

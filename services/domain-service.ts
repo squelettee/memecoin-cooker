@@ -10,4 +10,5 @@ export const checkDomainAvailability = async (domain: string) => {
     console.error('Erreur:', error);
     return false;
   }
-}; 
+};
+

@@ -1,31 +1,34 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import { CreateDomainForm } from '@/components/forms/create-landing-form'
+import { CreateTemplateForm } from '@/components/forms/create-template'
 import { atom, useAtom } from 'jotai'
 import { TemplateBasic } from '@/components/_templates/template-basic'
-import { DomainFormValues } from '@/app/validations/domain-schema'
+import { TemplateFormValues } from '@/validations/template-schema'
 
-export const domainFormAtom = atom<DomainFormValues>({
+const domainFormAtom = atom<TemplateFormValues>({
   domain: '',
   tokenName: '',
   contractAddress: '',
   twitter: '',
-  description: ''
+  description: '',
+  templateType: 'skyscraper'
 })
 
 export default function Page() {
   const params = useParams()
+
+  console.log(params)
   const [formData] = useAtom(domainFormAtom)
 
   return (
     <main className="flex w-full h-[90vh]">
-      <div className='w-full h-full md:w-3/12 border-r border-black p-4'>
-        <CreateDomainForm domain={params.domain as string} />
+      <div className='w-full h-full md:w-3/12 border-r p-4'>
+        <CreateTemplateForm domain={params.domain as string} />
       </div>
 
-      <div className='hidden md:block md:w-9/12 h-full bg-zinc-600'>
-        <TemplateBasic data={formData} />
+      <div className='hidden md:block md:w-9/12 h-full'>
+        <TemplateBasic preview data={formData} />
       </div>
     </main>
   )

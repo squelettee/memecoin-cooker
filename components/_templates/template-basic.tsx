@@ -1,45 +1,34 @@
-import { TwitterIcon } from "lucide-react";
+'use client'
+import SkyscraperTemplate from "./skyscraper";
 
-interface TemplateProps {
+interface TemplateBasicProps {
   data: {
-    domain: string;
-    tokenName: string;
-    contractAddress: string;
-    twitter: string;
-    description: string;
+    domain?: string
+    tokenName?: string
+    description?: string
+    contractAddress?: string
+    twitter?: string
+    telegram?: string
+    tiktok?: string
+    insta?: string
+    dexscreener?: string
+    pumpFun?: string
+    coinGecko?: string
+    coinMarketCap?: string
+    birdeye?: string
+    dextool?: string
+    whitepaper?: string
+    templateType?: string
+    imageUrl?: string
+    imagePath?: string
   }
+  preview?: boolean
 }
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import Link from "next/link";
 
-export function TemplateBasic({ data }: TemplateProps) {
+export function TemplateBasic({ data, preview }: TemplateBasicProps) {
   return (
-    <div className="flex flex-col justify-center items-center h-[100vh]">
-      <Card className="p-6 mx-auto bg-red">
-        <CardHeader>
-          <CardTitle>{data.tokenName || 'Nom du token'}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CardDescription>{data.description || 'Description du coin'}</CardDescription>
-          <p className="mt-2">{data.contractAddress || 'Adresse du contrat'}</p>
-          <Link
-            href={`https://twitter.com/${data.twitter || ''}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 flex items-center text-blue-500 hover:underline"
-          >
-            {`@${data.twitter}` || 'Twitter'}
-            <TwitterIcon className="ml-2" />
-          </Link>
-        </CardContent>
-      </Card>
-
-      <footer className="mt-4">
-        <Link href="/" className="text-blue-500 hover:underline">
-          Retour à laccueil
-        </Link>
-      </footer>
-
-    </div>
+    <div className={`flex flex-col justify-center items-center ${preview ? 'h-[90vh]' : 'h-[100vh]'}`}>
+      {data.templateType === "skyscraper" && <SkyscraperTemplate data={data} />}
+    </div >
   )
 }

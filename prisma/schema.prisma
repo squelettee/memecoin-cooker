@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Template {
+  // Timestamps
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+
+  // Unique identifier
+  id              Int      @id @default(autoincrement())
+
+  // Basic info
+  domain          String   @unique
+  tokenName       String   @db.VarChar(100)
+  description     String   @db.Text
+  contractAddress String   @unique @db.VarChar(100)
+
+  // Social media links
+  twitter         String?  @db.VarChar(255)
+  telegram        String?  @db.VarChar(255)
+  tiktok          String?  @db.VarChar(255)
+  insta           String?  @db.VarChar(255)
+
+  // Market/Trading links
+  dexscreener     String?  @db.VarChar(255)
+  pumpFun         String?  @db.VarChar(255)
+  coinGecko       String?  @db.VarChar(255)
+  coinMarketCap   String?  @db.VarChar(255)
+  birdeye         String?  @db.VarChar(255)
+  dextool         String?  @db.VarChar(255)
+
+  // Documentation
+  whitepaper      String?  @db.VarChar(255)
+
+  // Template type
+  templateType    String?  @db.VarChar(50)
+
+  // Images
+  imageUrl        String?  @db.VarChar(255)
+  imagePath       String?  @db.VarChar(255)
+}
