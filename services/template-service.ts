@@ -4,14 +4,14 @@ interface TemplateData {
   // Métadonnées système
   domain: string;
   packType: PackType;
-  status?: ProjectStatus;
+  status: ProjectStatus;
 
   // Pack BASIC
-  tokenName: string;
-  tokenSymbol: string;
-  contractAddress: string;
-  blockchain: string;
-  launchDate: string;
+  tokenName?: string;
+  tokenSymbol?: string;
+  contractAddress?: string;
+  blockchain?: string;
+  launchDate?: string;
   imageUrl?: string;
 
   // Pack MEDIUM
@@ -23,8 +23,8 @@ interface TemplateData {
   // Pack PREMIUM
   aiAgent?: Record<string, unknown>;
   aiPrompt?: string;
-  aiEnabled?: boolean;
-  aiLanguages?: string[];
+  aiEnabled: boolean;
+  aiLanguages: string[];
 }
 
 export class TemplateService {

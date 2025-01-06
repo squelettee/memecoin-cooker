@@ -86,22 +86,43 @@ export function CreateTemplateForm({ domain }: CreateDomainFormProps) {
     },
   })
 
+  form.watch((data) => {
+    console.log('Form values changed:', data);
+  });
+
   async function onSubmit(values: TemplateFormValues) {
     setIsLoading(true)
     try {
-      await TemplateService.createTemplate(values)
+      const templateData = {
+        ...values,
+        launchDate: values.launchDate || ''
+      }
+      await TemplateService.createTemplate(templateData)
       setFormData(values)
       router.push(`/${domain}`)
     } catch (error) {
       console.error('Error during creation:', error)
+      if (error instanceof Error) {
+        alert(`Erreur lors de la création: ${error.message}`)
+      } else {
+        alert('Une erreur est survenue lors de la création')
+      }
     } finally {
       setIsLoading(false)
     }
   }
 
   const onError = (errors: FieldErrors<TemplateFormValues>) => {
-    console.error("Form validation errors:", errors);
-  };
+    const errorMessages = Object.entries(errors).map(([field, error]) => {
+      return `${field}: ${error?.message}`
+    })
+
+    console.error("Erreurs de validation:", errorMessages)
+    alert(`Erreurs dans le formulaire:\n${errorMessages.join('\n')}`)
+  }
+
+  const formState = form.formState;
+  console.log("Form State Errors:", formState.errors);
 
   return (
     <div className='flex w-full'>

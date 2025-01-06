@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Template" ALTER COLUMN "tokenName" DROP NOT NULL,
+ALTER COLUMN "contractAddress" DROP NOT NULL,
+ALTER COLUMN "blockchain" DROP NOT NULL,
+ALTER COLUMN "launchDate" DROP NOT NULL,
+ALTER COLUMN "tokenSymbol" DROP NOT NULL;

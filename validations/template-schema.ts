@@ -16,35 +16,23 @@ export const templateSchema = z.object({
   domain: z.string()
     .min(1, "Domain name is required")
     .regex(/^[a-z0-9-]+$/, "Domain name can only contain lowercase letters, numbers, and hyphens")
-    .min(3, "Domain name must be at least 3 characters long")
-    .max(15, "Domain name cannot exceed 15 characters"),
+    .min(3, "Domain name must be at least 3 characters long"),
   packType: z.nativeEnum(PackType).default(PackType.BASIC),
   status: z.nativeEnum(ProjectStatus).default(ProjectStatus.PENDING),
 
-  // Pack BASIC
-  tokenName: z.string()
-    .min(2, "Token name must be at least 2 characters long")
-    .max(100, "Token name cannot exceed 100 characters"),
-  tokenSymbol: z.string()
-    .min(1, "Token symbol is required")
-    .max(20, "Token symbol cannot exceed 20 characters"),
-  contractAddress: z.string()
-    .min(1, "Contract address is required")
-    .max(100, "Contract address is too long"),
-  blockchain: z.string()
-    .min(1, "Blockchain is required")
-    .max(50, "Blockchain name is too long"),
-  launchDate: z.string().datetime("Must be a valid date"),
-  imageUrl: z.string().url("Must be a valid URL").optional(),
+  // Pack BASIC - tous rendus optionnels
+  tokenName: z.string().optional(),
+  tokenSymbol: z.string().optional(),
+  contractAddress: z.string().optional(),
+  blockchain: z.string().optional(),
+  launchDate: z.string().optional(),
+  imageUrl: z.string().optional(),
 
   // Pack MEDIUM
-  description: z.string()
-    .min(10, "Description must be at least 10 characters")
-    .max(1000, "Description is too long")
-    .optional(),
-  telegram: z.string().url("Must be a valid URL").optional(),
-  twitter: z.string().url("Must be a valid URL").optional(),
-  dexscreener: z.string().url("Must be a valid URL").optional(),
+  description: z.string().optional(),
+  telegram: z.string().optional(),
+  twitter: z.string().optional(),
+  dexscreener: z.string().optional(),
 
   // Pack PREMIUM
   aiAgent: z.record(z.any()).optional(),

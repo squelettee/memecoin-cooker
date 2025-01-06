@@ -34,11 +34,11 @@ model Template {
   status          ProjectStatus @default(PENDING)
 
   // Pack BASIC (2min) - L'essentiel
-  tokenName       String        @db.VarChar(100)     // Nom du token
-  tokenSymbol     String        @db.VarChar(20)      // Symbole du token
-  contractAddress String        @unique @db.VarChar(100)  // Adresse du contrat
-  blockchain      String        @db.VarChar(50)      // Réseau blockchain
-  launchDate      DateTime                          // Date de lancement prévue
+  tokenName       String?        @db.VarChar(100)     // Nom du token
+  tokenSymbol     String?        @db.VarChar(20)      // Symbole du token
+  contractAddress String?        @unique @db.VarChar(100)  // Adresse du contrat
+  blockchain      String?        @db.VarChar(50)      // Réseau blockchain
+  launchDate      DateTime?                          // Date de lancement prévue
   imageUrl        String?       @db.VarChar(255)     // Logo du projet
 
   // Pack MEDIUM (5min) - Réseaux sociaux
