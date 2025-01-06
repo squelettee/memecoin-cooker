@@ -26,19 +26,14 @@ export default function ScriptCopyBtn({
   className,
 }: ScriptCopyBtnProps) {
   const packageManagers = Object.keys(commandMap);
-  const [packageManager, setPackageManager] = useState(packageManagers[0] || '');
+  const [packageManager, setPackageManager] = useState(packageManagers[0]);
   const [copied, setCopied] = useState(false);
   const [highlightedCode, setHighlightedCode] = useState("");
   const { theme } = useTheme();
-  const command = commandMap[packageManager] || '';
+  const command = commandMap[packageManager];
 
   useEffect(() => {
     async function loadHighlightedCode() {
-      if (!command) {
-        setHighlightedCode('');
-        return;
-      }
-
       try {
         const highlighted = await codeToHtml(command, {
           lang: codeLanguage,
