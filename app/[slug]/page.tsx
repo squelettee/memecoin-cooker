@@ -1,4 +1,4 @@
-import { TemplateBasic } from "@/components/_templates/template"
+import { Template } from '@/components/_templates/template'
 import { TemplateService } from "@/services/template-service"
 
 export default async function Page({
@@ -10,7 +10,7 @@ export default async function Page({
 
   return (
     <main>
-      <TemplateBasic data={data} />
+      <Template data={data} />
     </main>
   )
 }
