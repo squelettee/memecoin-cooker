@@ -1,7 +1,6 @@
 'use client'
 import { BasicTemplate } from "./basic"
-import { PackType } from "@/validations/template-schema"
-import { ProjectStatus } from "@prisma/client"
+import { PackType, ProjectStatus } from "@/validations/template-schema"
 
 interface AIAgent {
   context: {
