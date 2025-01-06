@@ -1,42 +1,56 @@
 import { z } from "zod";
 
+export enum PackType {
+  BASIC = 'BASIC',
+  MEDIUM = 'MEDIUM',
+  PREMIUM = 'PREMIUM'
+}
+
+export enum ProjectStatus {
+  PENDING = 'PENDING',
+  LIVE = 'LIVE'
+}
+
 export const templateSchema = z.object({
-  domain: z.string().min(1, "Domain name is required"),
-  tokenName: z.string().min(2, {
-    message: "The name must be at least 2 characters long.",
-  }).max(8, {
-    message: "The name must be at most 8 characters long.",
-  }),
-  contractAddress: z.string().min(2, {
-    message: "The address must be at least 2 characters long.",
-  }),
-  twitter: z
-    .string()
-    .optional()
-    .transform((str) => str ? (str.startsWith('@') ? str.substring(1) : str) : undefined),
+  // Métadonnées système
+  domain: z.string()
+    .min(1, "Domain name is required")
+    .regex(/^[a-z0-9-]+$/, "Domain name can only contain lowercase letters, numbers, and hyphens")
+    .min(3, "Domain name must be at least 3 characters long")
+    .max(15, "Domain name cannot exceed 15 characters"),
+  packType: z.nativeEnum(PackType).default(PackType.BASIC),
+  status: z.nativeEnum(ProjectStatus).default(ProjectStatus.PENDING),
+
+  // Pack BASIC
+  tokenName: z.string()
+    .min(2, "Token name must be at least 2 characters long")
+    .max(100, "Token name cannot exceed 100 characters"),
+  tokenSymbol: z.string()
+    .min(1, "Token symbol is required")
+    .max(20, "Token symbol cannot exceed 20 characters"),
+  contractAddress: z.string()
+    .min(1, "Contract address is required")
+    .max(100, "Contract address is too long"),
+  blockchain: z.string()
+    .min(1, "Blockchain is required")
+    .max(50, "Blockchain name is too long"),
+  launchDate: z.string().datetime("Must be a valid date"),
+  imageUrl: z.string().url("Must be a valid URL").optional(),
+
+  // Pack MEDIUM
   description: z.string()
-    .min(10, {
-      message: "The description must be at least 10 characters long.",
-    })
-    .max(250, {
-      message: "The description must be at most 250 characters long.",
-    })
-    .refine((desc) => (desc.match(/\n/g) || []).length <= 3, {
-      message: "The description must have at most 3 line breaks.",
-    }),
-  telegram: z.string().optional(),
-  tiktok: z.string().optional(),
-  insta: z.string().optional(),
-  dexscreener: z.string().optional(),
-  pumpFun: z.string().optional(),
-  coinGecko: z.string().optional(),
-  coinMarketCap: z.string().optional(),
-  birdeye: z.string().optional(),
-  dextool: z.string().optional(),
-  whitepaper: z.string().optional(),
-  templateType: z.enum(["skyscraper", "space", "moon"]).optional(),
-  imageUrl: z.string().optional(),
-  imagePath: z.string().optional(),
+    .min(10, "Description must be at least 10 characters")
+    .max(1000, "Description is too long")
+    .optional(),
+  telegram: z.string().url("Must be a valid URL").optional(),
+  twitter: z.string().url("Must be a valid URL").optional(),
+  dexscreener: z.string().url("Must be a valid URL").optional(),
+
+  // Pack PREMIUM
+  aiAgent: z.record(z.any()).optional(),
+  aiPrompt: z.string().optional(),
+  aiEnabled: z.boolean().default(false),
+  aiLanguages: z.array(z.string()).default(["en"])
 });
 
-export type TemplateFormValues = z.infer<typeof templateSchema>; 
+export type TemplateFormValues = z.infer<typeof templateSchema>;

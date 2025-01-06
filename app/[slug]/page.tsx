@@ -1,4 +1,4 @@
-import { TemplateBasic } from "@/components/_templates/template-basic"
+import { TemplateBasic } from "@/components/_templates/template"
 import { TemplateService } from "@/services/template-service"
 
 export default async function Page({

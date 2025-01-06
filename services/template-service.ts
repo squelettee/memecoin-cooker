@@ -1,22 +1,30 @@
+import { PackType, ProjectStatus } from "@/validations/template-schema";
+
 interface TemplateData {
+  // Métadonnées système
   domain: string;
+  packType: PackType;
+  status?: ProjectStatus;
+
+  // Pack BASIC
   tokenName: string;
+  tokenSymbol: string;
   contractAddress: string;
-  description: string;
-  twitter?: string;
-  telegram?: string;
-  tiktok?: string;
-  insta?: string;
-  dexscreener?: string;
-  pumpFun?: string;
-  coinGecko?: string;
-  coinMarketCap?: string;
-  birdeye?: string;
-  dextool?: string;
-  whitepaper?: string;
-  templateType: "skyscraper" | "space" | "moon";
+  blockchain: string;
+  launchDate: string;
   imageUrl?: string;
-  imagePath?: string;
+
+  // Pack MEDIUM
+  description?: string;
+  telegram?: string;
+  twitter?: string;
+  dexscreener?: string;
+
+  // Pack PREMIUM
+  aiAgent?: Record<string, unknown>;
+  aiPrompt?: string;
+  aiEnabled?: boolean;
+  aiLanguages?: string[];
 }
 
 export class TemplateService {
@@ -28,10 +36,7 @@ export class TemplateService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...templateData,
-          templateType: templateData.templateType || 'skyscraper',
-        }),
+        body: JSON.stringify(templateData),
       });
       console.log('Réponse reçue:', response.status);
 
