@@ -12,8 +12,28 @@ export async function POST(request: Request) {
     const requestData = await request.json();
     const parsedData = templateSchema.parse(requestData);
 
+    // Ensure all required fields have values
+    const templateData = {
+      status: parsedData.status,
+      domain: parsedData.domain,
+      packType: parsedData.packType,
+      tokenName: parsedData.tokenName,
+      tokenSymbol: parsedData.tokenSymbol,
+      contractAddress: parsedData.contractAddress,
+      blockchain: parsedData.blockchain,
+      launchDate: parsedData.launchDate,
+      imageUrl: parsedData.imageUrl || '',
+      description: parsedData.description || '',
+      telegram: parsedData.telegram || '',
+      twitter: parsedData.twitter || '',
+      dexscreener: parsedData.dexscreener || '',
+      aiPrompt: parsedData.aiPrompt,
+      aiEnabled: parsedData.aiEnabled,
+      aiLanguages: parsedData.aiLanguages
+    };
+
     const newTemplate = await prisma.template.create({
-      data: parsedData,
+      data: templateData,
     });
 
     return new Response(JSON.stringify(newTemplate), { status: 201 });
