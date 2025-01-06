@@ -9,6 +9,7 @@ export async function POST(request: Request) {
   }
 
   try {
+    console.log(request)
     const requestData = await request.json();
     const parsedData = templateSchema.parse(requestData);
 
